@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,13 @@ namespace AcademiaPCD
 {
     class Program
     {
+        private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Academia PCD 2020 - Avanade");
+            Console.WriteLine("Academia PCD 2020 - Avanade");            
+            Configurar();
+            _log.Debug("Debug Test");            
 
             //Declaração de variável numérica
             Console.WriteLine("");
@@ -203,11 +208,12 @@ namespace AcademiaPCD
 
             if (int.TryParse(letras, out number))
             {
-                Console.WriteLine("Conversão OK {0}", texto);
+                Console.WriteLine("Conversão OK {0}", texto);                
             }
             else
             {
                 Console.WriteLine("Conversão ERROR");
+                _log.Error("Conversão ERROR");
             }
 
             //Tratamento de exceção
@@ -309,5 +315,22 @@ namespace AcademiaPCD
             return resultado;
         }
 
+        public static void Configurar()
+        {
+            var config = new NLog.Config.LoggingConfiguration();
+           
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "file.txt" };
+            var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
+            var logerro = new NLog.Targets.FileTarget("logerro") { FileName = "erro.txt" };
+
+            config.AddRule(LogLevel.Info, LogLevel.Fatal, logconsole);
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+            config.AddRule(LogLevel.Error, LogLevel.Fatal, logerro);
+
+            // Apply config           
+            LogManager.Configuration = config;
+
+        }
+      
     }
 }
