@@ -15,8 +15,8 @@ namespace AcademiaPCD
         {
             Console.WriteLine("Academia PCD 2020 - Avanade");            
             Configurar();
-            _log.Debug("Debug Test");            
-
+            _log.Debug("Debug Academia PCD");
+             
             //Declaração de variável numérica
             Console.WriteLine("");
             int inteiro = 2;
@@ -265,6 +265,19 @@ namespace AcademiaPCD
                 Console.WriteLine("Valores do array: {0}", academia_pcd[i]);
             }
 
+            PagarFolha(167);
+
+            List<int> funcionarios = new List<int>();
+
+            funcionarios.Add(10);
+            funcionarios.Add(2);
+            funcionarios.Add(119);
+            PagarFolha(funcionarios);
+
+
+            //var ex = new NullReferenceException("Ocorreu um exceção de NULL");
+            //throw ex;
+
             Console.ReadKey();                
         }
 
@@ -327,10 +340,18 @@ namespace AcademiaPCD
             config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
             config.AddRule(LogLevel.Error, LogLevel.Fatal, logerro);
 
-            // Apply config           
             LogManager.Configuration = config;
 
         }
-      
+
+        public static void PagarFolha(int Funcionario)
+        {
+            Console.WriteLine("Pagamento da Folha {0}", Funcionario);
+        }
+
+        public static void PagarFolha(List<int> Funcionario)
+        {
+            Console.WriteLine("Pagamento da Folha {0}", Funcionario.Count());
+        }
     }
 }
